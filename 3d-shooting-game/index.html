@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Arena Shooter - Player vs Computer</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      overflow: hidden;
+      background: #0a0a0f;
+      color: #e0e0e0;
+    }
+    #canvas-container {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    #ui {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      padding: 20px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      pointer-events: none;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
+    }
+    .panel {
+      background: rgba(20, 22, 30, 0.85);
+      border: 1px solid rgba(80, 120, 200, 0.4);
+      border-radius: 12px;
+      padding: 14px 20px;
+      min-width: 180px;
+    }
+    .panel h3 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #8ab4f8;
+      margin-bottom: 8px;
+    }
+    .health-bar-wrap {
+      height: 12px;
+      background: rgba(0,0,0,0.4);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-top: 4px;
+    }
+    .health-bar {
+      height: 100%;
+      border-radius: 6px;
+      transition: width 0.2s ease;
+    }
+    #p1-health .health-bar { background: linear-gradient(90deg, #34d399, #10b981); }
+    #p2-health .health-bar { background: linear-gradient(90deg, #f87171, #ef4444); }
+    #instructions {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      pointer-events: none;
+    }
+    #instructions kbd {
+      background: rgba(255,255,255,0.15);
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin: 0 2px;
+    }
+    #game-over {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      padding: 32px 48px;
+      background: rgba(15, 15, 25, 0.95);
+      border: 2px solid rgba(200, 80, 80, 0.6);
+      border-radius: 16px;
+      display: none;
+      pointer-events: auto;
+    }
+    #game-over.show { display: block; }
+    #game-over h2 { color: #f87171; margin-bottom: 12px; font-size: 24px; }
+    #game-over p { color: #94a3b8; margin-bottom: 20px; }
+    #game-over button {
+      padding: 12px 28px;
+      font-size: 14px;
+      background: #3b82f6;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    #game-over button:hover { background: #2563eb; }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+  <div id="ui">
+    <div class="panel">
+      <h3>You (Player 1)</h3>
+      <div id="p1-health" class="health-bar-wrap">
+        <div class="health-bar" style="width: 100%"></div>
+      </div>
+    </div>
+    <div class="panel">
+      <h3>Computer (Player 2)</h3>
+      <div id="p2-health" class="health-bar-wrap">
+        <div class="health-bar" style="width: 100%"></div>
+      </div>
+    </div>
+  </div>
+  <div id="instructions">
+    <strong>Arrow keys</strong> move · <kbd>Space</kbd> shoot · <strong>Mouse drag</strong> look around
+  </div>
+  <div id="game-over">
+    <h2>Game Over</h2>
+    <p id="winner-text"></p>
+    <button id="restart-btn">Play Again</button>
+  </div>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module" src="game.js"></script>
+</body>
+</html>
